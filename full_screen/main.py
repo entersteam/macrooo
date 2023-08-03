@@ -3,6 +3,7 @@ import cv2
 import pyautogui 
 import numpy as np
 import pyperclip
+import pynput
 
 img_file_path = "full_screen/img/"
 
@@ -22,3 +23,25 @@ def image_click(img_path, clicking = False, confidence = 0.95, delay = 0.1, dx =
         pyautogui.moveRel(dx,dy)
         pyautogui.click()
         break
+
+def REC(save_name = None):
+    if save_name == None:
+        save_name = "save"
+        
+    with pynput.keyboard.Listener(
+        on_press=on_press,
+        on_release=on_release) as listener:
+        listener.join()
+
+    
+def on_press(key):
+    print('Key %s pressed' % key)
+
+def on_release(key):
+    print('Key %s released' %key)
+    if key == pynput.keyboard.Key.esc:
+        return False
+        
+
+if __name__ == "__main__":
+    REC()
